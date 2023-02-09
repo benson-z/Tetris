@@ -16,6 +16,8 @@ class Board():
         display = gamewindow.getInstance()
         for line in range(len(matrix)):
             for column in range(len(matrix[line])):
+                if matrix[line][column] == 0:
+                    continue
                 rectangle = pygame.Rect(constants.boardstartx + (column + x) * constants.blocksize, 
                                         constants.boardstarty - (line + y) * constants.blocksize,
                                         constants.blocksize,
@@ -26,7 +28,7 @@ class Board():
             for column in range(len(matrix[line])):
                 if (line < 0 or line > 19) or (column < 0 or column > 9):
                     continue
-                if matrix[line][column] != state.State.NONE:
+                if matrix[line][column] != 0:
                     self.boardState[y + line][x + column] = blocktype
     def draw(self):
         display = gamewindow.getInstance()
