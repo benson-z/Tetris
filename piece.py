@@ -5,6 +5,7 @@ class Piece():
     def __init__(self, blocktype, rotations):
         self.layout = rotations[0]
         self.rotations = rotations
+        self.currentrot = 0
         self.blocktype = blocktype
         self.x = 2
         self.y = 20
@@ -32,8 +33,16 @@ class Piece():
         if self.valid(self.layout, self.x + x, self.y + y):
             self.x += x
             self.y += y
+            return 0
+        else:
+            return -1
     def rotate(self, rotations):
-        pass
+        if self.valid(self.rotations[(self.currentrot + rotations)%4], self.x, self.y):
+            self.layout = self.rotations[(self.currentrot + rotations)%4]
+            self.currentrot = (self.currentrot + rotations)%4
+            return 0
+        else:
+            return -1
     def update(self):
         board.getInstance().displayActive(self.layout, self.x, self.y, self.blocktype)
     def down(self):

@@ -1,7 +1,7 @@
 resolution = (1280, 720)
 
-boardstartx = 500
-boardstarty = 630
 blocksize = 30
+boardstartx = resolution[0]/2 - 5*blocksize
+boardstarty = 630
 
-grid = 2
+grid = 1
