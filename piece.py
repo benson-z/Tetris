@@ -2,21 +2,22 @@ import board
 import state
 
 class Piece():
-    def __init__(self, blocktype):
-        self.layout = [[1, 1, 1, 1]]
-        self.blocktype = state.State.I
+    def __init__(self, blocktype, rotations):
+        self.layout = rotations[0]
+        self.rotations = rotations
+        self.blocktype = blocktype
         self.x = 2
         self.y = 20
     def valid(self, layout, x, y):
         right = 0
         left = 3
-        down = 0
+        down = 20
         for row in range(len(layout)):
             for column in range(len(layout[row])):
                 if layout[row][column] != 0:
                     right = max(right, column)
                     left = min(left, column)
-                    down = max(down, row)
+                    down = min(down, row)
                     if (y + row < 0 or y + row > 19) or (x + column < 0 or x + column > 9):
                         continue
                     try:
