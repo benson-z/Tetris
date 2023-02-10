@@ -3,12 +3,23 @@ import state
 
 class Piece():
     def __init__(self, blocktype, rotations):
+        [a.reverse() for a in rotations]
         self.layout = rotations[0]
         self.rotations = rotations
         self.currentrot = 0
         self.blocktype = blocktype
         self.x = 2
         self.y = 20
+        self.lock = False
+    def resetPos(self):
+        self.x = 2
+        self.y = 20
+    def hold(self):
+        self.x = -5
+        self.y = 15
+        self.currentrot = 0
+        self.layout = self.rotations[0]
+        self.lock = False
     def valid(self, layout, x, y):
         right = 0
         left = 3
@@ -45,9 +56,16 @@ class Piece():
             return -1
     def update(self):
         board.getInstance().displayActive(self.layout, self.x, self.y, self.blocktype)
-    def down(self):
-        if not self.valid(self.layout, self.x, self.y - 1):
+    def down(self, drop = False):
+        if self.lock and not drop:
+            return -2
+        elif not self.valid(self.layout, self.x, self.y - 1):
             board.getInstance().place(self.layout, self.x, self.y, self.blocktype)
             return -1
         self.move(0, -1)
         return 0
+    def drop(self):
+        self.lock = True
+        while True:
+            if self.down(True) == -1:
+                break
