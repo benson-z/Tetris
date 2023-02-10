@@ -11,7 +11,10 @@ class Generator():
     def getNext(self):
         if len(self.queue) == 0:
             self.queue = self.newBag()
-        match(self.queue.pop()):
+            print(self.queue)
+        nextpiece = self.queue.pop()
+        print("New piece:", nextpiece)
+        match(nextpiece):
             case 'T':
                 rotations = [[[0, 1, 0], 
                             [1, 1, 1], 
@@ -54,7 +57,7 @@ class Generator():
                             [[1, 1], 
                             [1, 1]]]
                 blocktype = state.State.O
-            case 'J':
+            case 'L':
                 rotations = [[[0, 1, 0], 
                             [0, 1, 0], 
                             [1, 1, 0]], 
@@ -67,8 +70,8 @@ class Generator():
                             [[0, 0, 0], 
                             [1, 1, 1], 
                             [0, 0, 1]]]
-                blocktype = state.State.J
-            case 'L':
+                blocktype = state.State.L
+            case 'J':
                 rotations = [[[0, 1, 0], 
                             [0, 1, 0], 
                             [0, 1, 1]], 
@@ -81,8 +84,8 @@ class Generator():
                             [[0, 0, 1], 
                             [1, 1, 1], 
                             [0, 0, 0]]]
-                blocktype = state.State.L
-            case 'S':
+                blocktype = state.State.J
+            case 'Z':
                 rotations = [[[0, 1, 1], 
                             [1, 1, 0], 
                             [0, 0, 0]], 
@@ -96,8 +99,8 @@ class Generator():
                             [1, 1, 0], 
                             [0, 1, 0]]
                             ]
-                blocktype = state.State.S
-            case 'Z':
+                blocktype = state.State.Z
+            case 'S':
                 rotations = [[[1, 1, 0], 
                             [0, 1, 1], 
                             [0, 0, 0]], 
@@ -110,7 +113,7 @@ class Generator():
                             [[0, 1, 0], 
                             [1, 1, 0], 
                             [1, 0, 0]]]
-                blocktype = state.State.Z
+                blocktype = state.State.S
         return piece.Piece(blocktype, rotations)
     def newBag(self):
-        return random.permutation(np.array(['T', 'L', 'O', 'J', 'L', 'S', 'Z'])).tolist()
+        return random.permutation(np.array(['T', 'I', 'O', 'J', 'L', 'S', 'Z'])).tolist()

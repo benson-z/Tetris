@@ -6,10 +6,7 @@ import pygame
 class Board():
     def __init__(self):
         self.boardState = [[state.State.EMPTY]*10 for _ in range(20)]
-        self.boardState[5][5] = state.State.O
-        self.boardState[4][5] = state.State.O
-        self.boardState[5][4] = state.State.O
-        self.boardState[4][4] = state.State.O
+        self.holdPiece = state.State.EMPTY
     def getState(self, x, y):
         return self.boardState[y][x]
     def displayActive(self, matrix, x, y, blocktype):
@@ -30,6 +27,7 @@ class Board():
                     continue
                 if matrix[line][column] != 0:
                     self.boardState[y + line][x + column] = blocktype
+        self.update()
     def draw(self):
         display = gamewindow.getInstance()
         for line in range(len(self.boardState)):
@@ -40,6 +38,22 @@ class Board():
                                         constants.blocksize)
                 pygame.draw.rect(display, self.boardState[line][column].value, rectangle)
                 pygame.draw.rect(display, (50, 50, 50), rectangle, width=constants.grid)
+        if self.holdPiece != state.State.EMPTY:
+            self.holdPiece.update()
+    def hold(self, piece):
+        p, self.holdPiece = self.holdPiece, piece
+        self.holdPiece.hold()
+        print(self.holdPiece)
+        return p
+    def update(self):
+        remove = []
+        for row in range(len(self.boardState)):
+            if self.boardState[row].count(state.State.EMPTY) != 0:
+                remove.append(self.boardState[row])
+        while len(remove) < 20:
+            remove.append([state.State.EMPTY]*10)
+        self.boardState = remove
+
 
 
 b = Board()

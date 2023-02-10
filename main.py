@@ -19,8 +19,20 @@ while True:
             pygame.quit()
             quit()
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_UP:
+            if event.key == pygame.K_UP or event.key == pygame.K_a:
+                p.rotate(-1)
+            elif event.key == pygame.K_d:
                 p.rotate(1)
+            elif event.key == pygame.K_s:
+                p.rotate(2)
+            elif event.key == pygame.K_SPACE:
+                p.drop()
+                p = gen.getNext()
+            elif event.key == pygame.K_LSHIFT:
+                p = board.getInstance().hold(p)
+                if p == state.State.EMPTY:
+                    p = gen.getNext()
+                p.resetPos()
     keys=pygame.key.get_pressed()
     if keys[pygame.K_LEFT]:
         p.move(-1, 0)
@@ -28,10 +40,9 @@ while True:
         p.move(1, 0)
     if keys[pygame.K_DOWN]:
         p.move(0, -1)
-    if (counter % 20) == 1:
+    if (counter % 5) == 0:
         if p.down() == -1:
             p = gen.getNext()
-            print('New piece')
     p.update()
     gamewindow.update()
     gamewindow.getInstance().fill("black")
