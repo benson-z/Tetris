@@ -1,8 +1,6 @@
 import board
-import piece
 import gamewindow
 import pygame
-import state
 from piecegenerator import Generator
 
 
@@ -33,7 +31,7 @@ while True:
                 if p is None:
                     p = gen.getNext()
                 p.resetPos()
-    keys=pygame.key.get_pressed()
+    keys = pygame.key.get_pressed()
     if keys[pygame.K_LEFT]:
         p.move(-1, 0)
     if keys[pygame.K_RIGHT]:
