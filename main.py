@@ -30,7 +30,7 @@ while True:
                 p = gen.getNext()
             elif event.key == pygame.K_LSHIFT:
                 p = board.getInstance().hold(p)
-                if p == state.State.EMPTY:
+                if p is None:
                     p = gen.getNext()
                 p.resetPos()
     keys=pygame.key.get_pressed()
