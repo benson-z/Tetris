@@ -56,6 +56,11 @@ class Piece():
             return -1
     def update(self):
         board.getInstance().displayActive(self.layout, self.x, self.y, self.blocktype)
+    def shadow(self):
+        for a in range(self.y + 3):
+            if not self.valid(self.layout, self.x, self.y - a):
+                board.getInstance().displayActive(self.layout, self.x, self.y - a + 1, self.blocktype)
+                break
     def down(self, drop = False):
         if self.lock and not drop:
             return -2

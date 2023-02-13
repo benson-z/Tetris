@@ -44,5 +44,6 @@ while True:
         if p.down() == -1:
             p = gen.getNext()
     p.update()
+    p.shadow()
     gamewindow.update()
     gamewindow.getInstance().fill("black")
