@@ -24,13 +24,22 @@ class Board:
                                         constants.block_size)
                 pygame.draw.rect(display, blocktype.value, rectangle)
 
-    def place(self, matrix, x, y, blocktype):
-        for line in range(len(matrix)):
-            for column in range(len(matrix[line])):
+    def drawPiece(self, piece):
+        x, y = piece.getPos()
+        self.displayActive(piece.getLayout(), x, y, piece.getType())
+        for a in range(y + 4):
+            if not piece.valid(piece.getLayout(), x, y - a):
+                self.displayActive(piece.getLayout(), x, y - a + 1, piece.getType())
+                break
+
+    def place(self, piece):
+        x, y = piece.getPos()
+        for line in range(len(piece.getLayout())):
+            for column in range(len(piece.getLayout()[line])):
                 if (line < 0 or line > 19) or (column < 0 or column > 9):
                     continue
-                if matrix[line][column] != 0:
-                    self.boardState[y + line][x + column] = blocktype
+                if piece.getLayout()[line][column] != 0:
+                    self.boardState[y + line][x + column] = piece.getType()
         self.update()
 
     def draw(self):

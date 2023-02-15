@@ -3,12 +3,12 @@ import state
 
 
 class Piece:
-    def __init__(self, blocktype, rotations):
+    def __init__(self, blockType, rotations):
         [a.reverse() for a in rotations]  # need to fix
         self.layout = rotations[0]
         self.rotations = rotations
-        self.currentrot = 0
-        self.blocktype = blocktype
+        self.currentRot = 0
+        self.blockType = blockType
         self.x = 2
         self.y = 20
         self.lock = False
@@ -20,7 +20,7 @@ class Piece:
     def hold(self):
         self.x = -5
         self.y = 15
-        self.currentrot = 0
+        self.currentRot = 0
         self.layout = self.rotations[0]
         self.lock = False
 
@@ -54,27 +54,18 @@ class Piece:
             return -1
 
     def rotate(self, rotations):
-        if self.valid(self.rotations[(self.currentrot + rotations) % 4], self.x, self.y):
-            self.layout = self.rotations[(self.currentrot + rotations) % 4]
-            self.currentrot = (self.currentrot + rotations) % 4
+        if self.valid(self.rotations[(self.currentRot + rotations) % 4], self.x, self.y):
+            self.layout = self.rotations[(self.currentRot + rotations) % 4]
+            self.currentRot = (self.currentRot + rotations) % 4
             return 0
         else:
             return -1
-
-    def update(self):
-        board.getInstance().displayActive(self.layout, self.x, self.y, self.blocktype)
-
-    def shadow(self):
-        for a in range(self.y + 3):
-            if not self.valid(self.layout, self.x, self.y - a):
-                board.getInstance().displayActive(self.layout, self.x, self.y - a + 1, self.blocktype)
-                break
 
     def down(self, drop=False):
         if self.lock and not drop:
             return -2
         elif not self.valid(self.layout, self.x, self.y - 1):
-            board.getInstance().place(self.layout, self.x, self.y, self.blocktype)
+            board.getInstance().place(self)
             return -1
         self.move(0, -1)
         return 0
@@ -84,3 +75,12 @@ class Piece:
         while True:
             if self.down(True) == -1:
                 break
+
+    def getType(self):
+        return self.blockType
+
+    def getPos(self):
+        return self.x, self.y
+
+    def getLayout(self):
+        return self.layout
