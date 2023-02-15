@@ -41,7 +41,6 @@ while True:
     if (counter % 5) == 0:
         if p.down() == -1:
             p = gen.getNext()
-    p.update()
-    p.shadow()
+    board.getInstance().drawPiece(p)
     gamewindow.update()
     gamewindow.getInstance().fill("black")
