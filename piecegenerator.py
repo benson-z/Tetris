@@ -3,18 +3,18 @@ import piece
 import state
 import numpy as np
 from numpy import random
+import copy
 
 
 class Generator:
     def __init__(self, seed=-1):
         if seed != -1:
             random.seed(seed)
-        self.queue = []
+        self.queue = ['L', 'L']
 
     def getNext(self):
         if len(self.queue) == 0:
             self.queue = self.newBag()
-            print(self.queue)
         nextpiece = self.queue.pop()
         print("New piece:", nextpiece)
         match nextpiece:
@@ -33,7 +33,10 @@ class Generator:
             case 'S':
                 blocktype = state.State.S
         rotations = constants.rotations[nextpiece]
-        return piece.Piece(blocktype, rotations)
+        return piece.Piece(blocktype, copy.deepcopy(rotations))
 
     def newBag(self):
         return random.permutation(np.array(['T', 'I', 'O', 'J', 'L', 'S', 'Z'])).tolist()
+
+    def reset(self):
+        self.queue = []
