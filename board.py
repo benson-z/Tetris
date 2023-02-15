@@ -6,8 +6,7 @@ import pygame
 
 class Board:
     def __init__(self):
-        self.boardState = [[state.State.EMPTY] * 10 for _ in range(20)]
-        self.holdPiece = None
+        self.reset()
 
     def getState(self, x, y):
         return self.boardState[y][x]
@@ -24,9 +23,11 @@ class Board:
                                         constants.block_size)
                 pygame.draw.rect(display, blocktype.value, rectangle)
 
-    def drawPiece(self, piece):
+    def drawPiece(self, piece, shadow=True):
         x, y = piece.getPos()
         self.displayActive(piece.getLayout(), x, y, piece.getType())
+        if not shadow:
+            return
         for a in range(y + 4):
             if not piece.valid(piece.getLayout(), x, y - a):
                 self.displayActive(piece.getLayout(), x, y - a + 1, piece.getType())
@@ -53,12 +54,11 @@ class Board:
                 pygame.draw.rect(display, self.boardState[line][column].value, rectangle)
                 pygame.draw.rect(display, (50, 50, 50), rectangle, width=constants.grid)
         if self.holdPiece is not None:
-            self.holdPiece.update()
+            self.drawPiece(self.holdPiece, shadow=False)
 
     def hold(self, piece):
         p, self.holdPiece = self.holdPiece, piece
         self.holdPiece.hold()
-        print(self.holdPiece)
         return p
 
     def update(self):
@@ -70,6 +70,9 @@ class Board:
             remove.append([state.State.EMPTY] * 10)
         self.boardState = remove
 
+    def reset(self):
+        self.boardState = [[state.State.EMPTY] * 10 for _ in range(20)]
+        self.holdPiece = None
 
 b = Board()
 

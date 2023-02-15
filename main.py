@@ -3,7 +3,6 @@ import gamewindow
 import pygame
 from piecegenerator import Generator
 
-
 gen = Generator()
 p = gen.getNext()
 

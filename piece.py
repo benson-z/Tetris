@@ -1,12 +1,13 @@
 import board
 import state
+import copy
 
 
 class Piece:
     def __init__(self, blockType, rotations):
-        [a.reverse() for a in rotations]  # need to fix
-        self.layout = rotations[0]
         self.rotations = rotations
+        [a.reverse() for a in self.rotations]  # need to fix
+        self.layout = self.rotations[0]
         self.currentRot = 0
         self.blockType = blockType
         self.x = 2
@@ -54,9 +55,11 @@ class Piece:
             return -1
 
     def rotate(self, rotations):
+        print("Current:", self.currentRot)
         if self.valid(self.rotations[(self.currentRot + rotations) % 4], self.x, self.y):
             self.layout = self.rotations[(self.currentRot + rotations) % 4]
             self.currentRot = (self.currentRot + rotations) % 4
+            print("New:", self.currentRot)
             return 0
         else:
             return -1
