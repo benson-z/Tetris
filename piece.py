@@ -1,3 +1,5 @@
+import pygame
+
 import board
 import state
 import copy
@@ -68,7 +70,11 @@ class Piece:
         if self.lock and not drop:
             return -2
         elif not self.valid(self.layout, self.x, self.y - 1):
-            board.getInstance().place(self)
+            try:
+                board.getInstance().place(self)
+            except:
+                print("Game Over")
+                quit()
             return -1
         self.move(0, -1)
         return 0
