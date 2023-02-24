@@ -67,7 +67,6 @@ class Piece:
             return 0
         else:
             rot_index = str((4 - self.currentRot) % 4) + "-" + str((4 - ((self.currentRot + rotations) % 4)) % 4)
-            print(rot_index)
             if self.getType() == state.State.O:
                 return -1
             elif self.getType() == state.State.L:
@@ -75,12 +74,10 @@ class Piece:
             else:
                 table = constants.kick_table["JLTSZ"][rot_index]
             for x, y in table:
-                print(x, y, self.valid(self.rotations[(self.currentRot + rotations) % 4], self.x + x, self.y + y))
                 if self.valid(self.rotations[(self.currentRot + rotations) % 4], self.x + x, self.y + y):
                     self.layout = self.rotations[(self.currentRot + rotations) % 4]
                     self.move(x, y)
                     self.currentRot = (self.currentRot + rotations) % 4
-                    print("New:", self.currentRot)
                     return 0
             return -1
 
