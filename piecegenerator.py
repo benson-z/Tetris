@@ -10,7 +10,7 @@ class Generator:
     def __init__(self, seed=-1):
         if seed != -1:
             random.seed(seed)
-        self.queue = []
+        self.queue = ["J", "Z", "O", "I", "L"]
 
     def getNext(self):
         if len(self.queue) == 0:
