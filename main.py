@@ -17,9 +17,9 @@ while True:
             quit()
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP or event.key == pygame.K_a:
-                p.rotate(-1)
-            elif event.key == pygame.K_d:
                 p.rotate(1)
+            elif event.key == pygame.K_d:
+                p.rotate(-1)
             elif event.key == pygame.K_s:
                 p.rotate(2)
             elif event.key == pygame.K_SPACE:

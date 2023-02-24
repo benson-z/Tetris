@@ -13,4 +13,6 @@ board_y = resolution[1] / 2 + 10 * block_size
 
 rotations = configs["rotations"]
 
+kick_table = configs["kick_table"]
+
 grid = 1  # Width of board grid (Change later)

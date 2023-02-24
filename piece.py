@@ -1,6 +1,7 @@
 import pygame
 
 import board
+import constants
 import state
 import copy
 
@@ -9,12 +10,14 @@ class Piece:
     def __init__(self, blockType, rotations):
         self.rotations = rotations
         [a.reverse() for a in self.rotations]  # need to fix
+        [[b.reverse() for b in c] for c in self.rotations]
         self.layout = self.rotations[0]
         self.currentRot = 0
         self.blockType = blockType
         self.x = 2
         self.y = 20
         self.lock = False
+        self.timeout = 2
 
     def resetPos(self):
         self.x = 2
@@ -57,19 +60,37 @@ class Piece:
             return -1
 
     def rotate(self, rotations):
-        print("Current:", self.currentRot)
+        self.timeout = 2
         if self.valid(self.rotations[(self.currentRot + rotations) % 4], self.x, self.y):
             self.layout = self.rotations[(self.currentRot + rotations) % 4]
             self.currentRot = (self.currentRot + rotations) % 4
-            print("New:", self.currentRot)
             return 0
         else:
+            rot_index = str((4 - self.currentRot) % 4) + "-" + str((4 - ((self.currentRot + rotations) % 4)) % 4)
+            print(rot_index)
+            if self.getType() == state.State.O:
+                return -1
+            elif self.getType() == state.State.L:
+                table = constants.kick_table["I"][rot_index]
+            else:
+                table = constants.kick_table["JLTSZ"][rot_index]
+            for x, y in table:
+                print(x, y, self.valid(self.rotations[(self.currentRot + rotations) % 4], self.x + x, self.y + y))
+                if self.valid(self.rotations[(self.currentRot + rotations) % 4], self.x + x, self.y + y):
+                    self.layout = self.rotations[(self.currentRot + rotations) % 4]
+                    self.move(x, y)
+                    self.currentRot = (self.currentRot + rotations) % 4
+                    print("New:", self.currentRot)
+                    return 0
             return -1
 
     def down(self, drop=False):
         if self.lock and not drop:
             return -2
         elif not self.valid(self.layout, self.x, self.y - 1):
+            if not drop and self.timeout > 0:
+                self.timeout -= 1
+                return 0
             try:
                 board.getInstance().place(self)
             except:
