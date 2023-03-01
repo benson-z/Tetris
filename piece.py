@@ -1,6 +1,6 @@
 import constants
 import state
-
+import board
 
 class Piece:
     def __init__(self, blockType, rotations):
