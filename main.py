@@ -41,5 +41,7 @@ while True:
         if p.down() == -1:
             p = gen.getNext()
     board.getInstance().drawPiece(p)
+    print(gen.getQueue())
+    board.getInstance().drawNext(gen.getQueue())
     gamewindow.update()
     gamewindow.getInstance().fill("black")

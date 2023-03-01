@@ -56,6 +56,10 @@ class Board:
         if self.holdPiece is not None:
             self.drawPiece(self.holdPiece, shadow=False)
 
+    def drawNext(self, queue):
+        for p in range(len(queue)):
+            self.displayActive(constants.rotations[queue[p]][2], 12, 16 - 3 * p, state.toState(queue[p]))
+
     def hold(self, piece):
         p, self.holdPiece = self.holdPiece, piece
         self.holdPiece.hold()

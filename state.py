@@ -10,3 +10,21 @@ class State(Enum):
     O = (225, 225, 0)
     NONE = (0, 0, 0)
     EMPTY = (0, 0, 0)
+
+
+def toState(str):
+    match str:
+        case 'T':
+            return State.T
+        case 'I':
+            return State.I
+        case 'O':
+            return State.O
+        case 'L':
+            return State.L
+        case 'J':
+            return State.J
+        case 'Z':
+            return State.Z
+        case 'S':
+            return State.S

@@ -14,13 +14,15 @@ class Piece:
         self.layout = self.rotations[0]
         self.currentRot = 0
         self.blockType = blockType
-        self.x = 2
-        self.y = 20
+        self.resetPos()
         self.lock = False
         self.timeout = 2
 
     def resetPos(self):
-        self.x = 2
+        if self.blockType == state.State.O:
+            self.x = 4
+        else:
+            self.x = 3
         self.y = 20
 
     def hold(self):
