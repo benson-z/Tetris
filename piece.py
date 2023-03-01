@@ -67,7 +67,7 @@ class Piece:
             self.layout = self.rotations[(self.currentRot + rotations) % 4]
             self.currentRot = (self.currentRot + rotations) % 4
             return 0
-        else:
+        elif abs(rotations) != 2:
             rot_index = str((4 - self.currentRot) % 4) + "-" + str((4 - ((self.currentRot + rotations) % 4)) % 4)
             if self.getType() == state.State.O:
                 return -1
@@ -82,6 +82,7 @@ class Piece:
                     self.currentRot = (self.currentRot + rotations) % 4
                     return 0
             return -1
+        return -1
 
     def down(self, drop=False):
         if self.lock and not drop:
