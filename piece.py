@@ -1,9 +1,5 @@
-import pygame
-
-import board
 import constants
 import state
-import copy
 
 
 class Piece:
