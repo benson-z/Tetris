@@ -53,6 +53,8 @@ class Piece:
         if self.valid(self.layout, self.x + x, self.y + y):
             self.x += x
             self.y += y
+            if y >= 0:
+                self.timeout = 2
             return 0
         else:
             return -1
