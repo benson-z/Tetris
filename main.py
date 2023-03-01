@@ -20,8 +20,6 @@ while True:
                 p.rotate(1)
             elif event.key == pygame.K_d:
                 p.rotate(-1)
-            elif event.key == pygame.K_s:
-                p.rotate(2)
             elif event.key == pygame.K_SPACE:
                 p.drop()
                 p = gen.getNext()
