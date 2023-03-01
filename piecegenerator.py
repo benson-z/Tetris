@@ -13,30 +13,19 @@ class Generator:
         self.queue = []
 
     def getNext(self):
-        if len(self.queue) == 0:
-            self.queue = self.newBag()
-        nextpiece = self.queue.pop()
+        if len(self.queue) <= 6:
+            self.queue += self.newBag()
+        nextpiece = self.queue.pop(0)
         print("New piece:", nextpiece)
-        match nextpiece:
-            case 'T':
-                blocktype = state.State.T
-            case 'I':
-                blocktype = state.State.I
-            case 'O':
-                blocktype = state.State.O
-            case 'L':
-                blocktype = state.State.L
-            case 'J':
-                blocktype = state.State.J
-            case 'Z':
-                blocktype = state.State.Z
-            case 'S':
-                blocktype = state.State.S
+        blocktype = state.toState(nextpiece)
         rotations = constants.rotations[nextpiece]
         return piece.Piece(blocktype, copy.deepcopy(rotations))
 
     def newBag(self):
         return random.permutation(np.array(['T', 'I', 'O', 'J', 'L', 'S', 'Z'])).tolist()
+
+    def getQueue(self):
+        return self.queue[:5]
 
     def reset(self):
         self.queue = []
