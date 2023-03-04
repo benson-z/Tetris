@@ -2,6 +2,7 @@ import state
 import gamewindow
 import constants
 import pygame
+import score
 
 
 class Board:
@@ -33,6 +34,18 @@ class Board:
                 self.displayActive(piece.getLayout(), x, y - a + 1, piece.getType())
                 break
 
+
+    def drawScore(self, scoreText):
+        labelText = pygame.font.Font("american-typewriter-bold.ttf", 32).render("Score", True, (255, 255, 255))
+        labelRect = labelText.get_rect()
+        labelRect.center = (constants.score_pos[0], constants.score_pos[1] - 50)
+        gamewindow.getInstance().blit(labelText, labelRect)
+        displayText = pygame.font.Font("american-typewriter-bold.ttf", 48).render(scoreText, True, (255, 255, 255))
+        displayRect = displayText.get_rect()
+        displayRect.center = constants.score_pos
+        gamewindow.getInstance().blit(displayText, displayRect)
+
+
     def place(self, piece):
         x, y = piece.getPos()
         for line in range(len(piece.getLayout())):
@@ -55,6 +68,7 @@ class Board:
                 pygame.draw.rect(display, (50, 50, 50), rectangle, width=constants.grid)
         if self.holdPiece is not None:
             self.drawPiece(self.holdPiece, shadow=False)
+        self.drawScore(score.getInstance().getScore())
 
     def drawNext(self, queue):
         for p in range(len(queue)):
@@ -70,6 +84,7 @@ class Board:
         for row in range(len(self.boardState)):
             if self.boardState[row].count(state.State.EMPTY) != 0:
                 remove.append(self.boardState[row])
+        score.getInstance().clear(20 - len(remove))
         while len(remove) < 20:
             remove.append([state.State.EMPTY] * 10)
         self.boardState = remove

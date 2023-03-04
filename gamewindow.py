@@ -1,6 +1,7 @@
 import pygame
 from constants import *
 
+pygame.init()
 gameDisplay = pygame.display.set_mode(resolution)
 pygame.display.set_caption("Tetris")
 clock = pygame.time.Clock()
