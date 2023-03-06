@@ -20,3 +20,5 @@ kick_table = configs["kick_table"]
 scoring_table = configs["scoring_table"]
 
 grid = 1  # Width of board grid (Change later)
+
+showHints = False

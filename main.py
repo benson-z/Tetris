@@ -1,4 +1,5 @@
 import board
+import constants
 import gamewindow
 import pygame
 from piecegenerator import Generator
@@ -28,6 +29,9 @@ while True:
                 if p is None:
                     p = gen.getNext()
                 p.resetPos()
+            elif event.key == pygame.K_TAB:
+                constants.showHints = not constants.showHints
+                print(constants.showHints)
     keys = pygame.key.get_pressed()
     if keys[pygame.K_LEFT]:
         p.move(-1, 0)
@@ -40,5 +44,4 @@ while True:
             p = gen.getNext()
     board.getInstance().drawPiece(p)
     board.getInstance().drawNext(gen.getQueue())
-    gamewindow.update()
-    gamewindow.getInstance().fill("black")
+    gamewindow.update(constants.showHints)
