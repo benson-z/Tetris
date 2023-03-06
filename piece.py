@@ -23,7 +23,7 @@ class Piece:
 
     def hold(self):
         self.x = -5
-        self.y = 15
+        self.y = 16
         self.currentRot = 0
         self.layout = self.rotations[0]
         self.lock = False

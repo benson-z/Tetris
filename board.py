@@ -72,7 +72,7 @@ class Board:
 
     def drawNext(self, queue):
         for p in range(len(queue)):
-            self.displayActive(constants.rotations[queue[p]][2], 12, 16 - 3 * p, state.toState(queue[p]))
+            self.displayActive(constants.rotations[queue[p]][2], 12, 16 - 3.2 * p, state.toState(queue[p]))
 
     def hold(self, piece):
         p, self.holdPiece = self.holdPiece, piece
