@@ -14,6 +14,7 @@ class Piece:
         self.lock = False
         self.timeout = 2
 
+    # Centers the piece at the top of the board
     def resetPos(self):
         if self.blockType == state.State.O:
             self.x = 4
@@ -21,6 +22,7 @@ class Piece:
             self.x = 3
         self.y = 20
 
+    # Moves the piece to the "Hold" position
     def hold(self):
         self.x = -5
         self.y = 16
@@ -28,6 +30,7 @@ class Piece:
         self.layout = self.rotations[0]
         self.lock = False
 
+    # Check if a certain position for the piece intersects the wall or other pieces
     def valid(self, layout, x, y):
         right = 0
         left = 3
@@ -49,6 +52,7 @@ class Piece:
             return False
         return True
 
+    # Piece translation with validity checks
     def move(self, x, y):
         if self.valid(self.layout, self.x + x, self.y + y):
             self.x += x
@@ -59,12 +63,17 @@ class Piece:
         else:
             return -1
 
+    # Piece rotation
     def rotate(self, rotations):
         self.timeout = 2
+
+        # Check if simple rotation works
         if self.valid(self.rotations[(self.currentRot + rotations) % 4], self.x, self.y):
             self.layout = self.rotations[(self.currentRot + rotations) % 4]
             self.currentRot = (self.currentRot + rotations) % 4
             return 0
+
+        # SRS kick table implementation
         elif abs(rotations) != 2:
             rot_index = str((4 - self.currentRot) % 4) + "-" + str((4 - ((self.currentRot + rotations) % 4)) % 4)
             print(rot_index)
@@ -84,22 +93,27 @@ class Piece:
             return -1
         return -1
 
+    # Move piece down by 1
+    # Places pieces
     def down(self, drop=False):
-        if self.lock and not drop:
+        if self.lock and not drop:  # Lock in hold position
             return -2
         elif not self.valid(self.layout, self.x, self.y - 1):
+            # Make sure the player has time to move their piece before placing
             if not drop and self.timeout > 0:
                 self.timeout -= 1
                 return 0
             try:
                 board.getInstance().place(self)
             except:
+                # Lose game (placement invalid because out of range)
                 print("Game Over")
                 quit()
             return -1
         self.move(0, -1)
         return 0
 
+    # Hard drop
     def drop(self):
         self.lock = True
         while True:
