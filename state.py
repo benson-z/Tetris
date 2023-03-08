@@ -1,5 +1,6 @@
 from enum import Enum
 
+# Block state with color values
 class State(Enum):
     T = (128, 0, 128)
     I = (0, 128, 128)
@@ -12,6 +13,7 @@ class State(Enum):
     EMPTY = (0, 0, 0)
 
 
+# Converter from char to state
 def toState(str):
     match str:
         case 'T':

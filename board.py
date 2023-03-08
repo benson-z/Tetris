@@ -9,9 +9,11 @@ class Board:
     def __init__(self):
         self.reset()
 
+    # Get the state of a specific pixel at (x, y)
     def getState(self, x, y):
         return self.boardState[y][x]
 
+    # Draw current piece
     def displayActive(self, matrix, x, y, blocktype):
         display = gamewindow.getInstance()
         for line in range(len(matrix)):
@@ -24,6 +26,7 @@ class Board:
                                         constants.block_size)
                 pygame.draw.rect(display, blocktype.value, rectangle)
 
+    # Draws piece object on the board
     def drawPiece(self, piece, shadow=True):
         x, y = piece.getPos()
         self.displayActive(piece.getLayout(), x, y, piece.getType())
@@ -34,7 +37,7 @@ class Board:
                 self.displayActive(piece.getLayout(), x, y - a + 1, piece.getType())
                 break
 
-
+    # Display score
     def drawScore(self, scoreText):
         labelText = pygame.font.Font("resources/STHeiti Light.ttc", 32).render("Score", True, (255, 255, 255))
         labelRect = labelText.get_rect()
@@ -45,7 +48,7 @@ class Board:
         displayRect.center = constants.score_pos
         gamewindow.getInstance().blit(displayText, displayRect)
 
-
+    # Transfer piece object into board matrix (called on place)
     def place(self, piece):
         x, y = piece.getPos()
         for line in range(len(piece.getLayout())):
@@ -56,6 +59,7 @@ class Board:
                     self.boardState[y + line][x + column] = piece.getType()
         self.update()
 
+    # Update board
     def draw(self):
         display = gamewindow.getInstance()
         for line in range(len(self.boardState)):
@@ -70,15 +74,18 @@ class Board:
             self.drawPiece(self.holdPiece, shadow=False)
         self.drawScore(score.getInstance().getScore())
 
+    # Draw the next queue
     def drawNext(self, queue):
         for p in range(len(queue)):
             self.displayActive(constants.rotations[queue[p]][2], 12, 16 - 3.2 * p, state.toState(queue[p]))
 
+    # Hold piece
     def hold(self, piece):
         p, self.holdPiece = self.holdPiece, piece
         self.holdPiece.hold()
         return p
 
+    # Clear filled lines (called on place)
     def update(self):
         remove = []
         for row in range(len(self.boardState)):
@@ -89,11 +96,13 @@ class Board:
             remove.append([state.State.EMPTY] * 10)
         self.boardState = remove
 
+    # Initialize board
     def reset(self):
         self.boardState = [[state.State.EMPTY] * 10 for _ in range(20)]
         self.holdPiece = None
 
-b = Board()
+
+b = Board()  # Self-contained instance for easy access
 
 
 def getInstance():

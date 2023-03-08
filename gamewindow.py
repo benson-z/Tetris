@@ -1,6 +1,8 @@
 import pygame
 from constants import *
 
+# Holds pygame display instance
+
 pygame.init()
 gameDisplay = pygame.display.set_mode(resolution)
 pygame.display.set_caption("Tetris")
