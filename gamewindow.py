@@ -6,8 +6,8 @@ gameDisplay = pygame.display.set_mode(resolution)
 pygame.display.set_caption("Tetris")
 clock = pygame.time.Clock()
 
-bg = pygame.image.load("background.png")
-hints = pygame.image.load("background_hints.png")
+bg = pygame.image.load("resources/background.png")
+hints = pygame.image.load("resources/background_hints.png")
 
 def getInstance():
     return gameDisplay

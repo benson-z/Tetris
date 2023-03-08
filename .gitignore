@@ -29,3 +29,6 @@ tempCodeRunnerFile.*
 .DS_Store
 ._*
 .idea/
+
+build
+*.spec
