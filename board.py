@@ -36,11 +36,11 @@ class Board:
 
 
     def drawScore(self, scoreText):
-        labelText = pygame.font.Font("american-typewriter-bold.ttf", 32).render("Score", True, (255, 255, 255))
+        labelText = pygame.font.Font("resources/STHeiti Light.ttc", 32).render("Score", True, (255, 255, 255))
         labelRect = labelText.get_rect()
         labelRect.center = (constants.score_pos[0], constants.score_pos[1] - 50)
         gamewindow.getInstance().blit(labelText, labelRect)
-        displayText = pygame.font.Font("american-typewriter-bold.ttf", 48).render(scoreText, True, (255, 255, 255))
+        displayText = pygame.font.Font("resources/STHeiti Light.ttc", 48).render(scoreText, True, (255, 255, 255))
         displayRect = displayText.get_rect()
         displayRect.center = constants.score_pos
         gamewindow.getInstance().blit(displayText, displayRect)
